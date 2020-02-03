@@ -8,6 +8,9 @@
  *
 */
 
+html {
+  scroll-behavior: smooth;
+}
 
 /* ---- Base Rules ---- */
 body {
@@ -79,7 +82,25 @@ a {
   color: white;
 }
 
-.navbar__menu .menu__link {
+.active {
+  background-color: #DAA520;
+}
+
+.navbar__menu {
+  display: flex;
+  justify-content: center;
+  padding: .6em;
+}
+
+#navbar__list a li{
+  padding: .5em;
+}
+
+#navbar__list a li:hover{
+  background-color: #FFD700;
+}
+
+.menu__link {
     display: block;
     padding: 1em;
     font-weight: bold;

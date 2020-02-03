@@ -19,51 +19,23 @@
  * Define Global Variables
  *
 */
-let sections = document.querySelectorAll("section");
-const navBarList = document.getElementById("navbar__list");
-const section1 = document.getElementById("section1");
-const section2 = document.getElementById("section2");
-const section3 = document.getElementById("section3");
+const sections = document.querySelectorAll("section");
 /**
  * End Global Variables
  * Start Helper Functions
  *
 */
-// function isScrolledIntoView(elem)
-// {
-//     var docViewTop = $(window).scrollTop();
-//     var docViewBottom = docViewTop + $(window).height();
-//
-//     var elemTop = $(elem).offset().top;
-//     var elemBottom = elemTop + $(elem).height();
-//     // console.log((elemBottom <= docViewBottom) && (elemTop >= docViewTop));  //true means in view
-//     return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
-// }
 
-function isScrolledIntoView(elem, sectns)
+const isScrolledIntoView = (elem) =>
 {
-    var docViewTop = $(window).scrollTop();
-    var docViewBottom = docViewTop + $(window).height();
+    const docViewTop = $(window).scrollTop();
+    const docViewBottom = docViewTop + $(window).height();
 
-    var elemTop = $(elem).offset().top;
-    var elemBottom = elemTop + $(elem).height();
+    const elemTop = $(elem).offset().top;
+    const elemBottom = elemTop + $(elem).height();
     // console.log((elemBottom <= docViewBottom) && (elemTop >= docViewTop));  //true means in view
-    if((elemBottom <= docViewBottom) && (elemTop >= docViewTop)){
-      elem.classList.add("your-active-class");
-
-      // for (let i = 0; i < sectns.length; ++i) {
-      //   if(sectns[i] !== elem){
-      //       sectns[i].classList.remove("your-active-class");
-      //   }
-      // }
-
-      for(const sect in sectns){
-        if(sect.value !== elem){
-            sect.value.classList.remove("your-active-class");
-        }
-      }
-    }
-}
+    return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+};
 
 /**
  * End Helper Functions
@@ -77,9 +49,11 @@ for (const section of sections){
   const li = document.createElement("li");
   const anchor = document.createElement("a");
   li.innerHTML = dataNav;
+  li.classList.add(`${section.id}`+"_link");
   const lc_dataNav = dataNav.toLowerCase();
   const lc_NoSpace_dataNav = lc_dataNav.replace(/ /g, "");
   anchor.href = "#"+lc_NoSpace_dataNav;
+  const navBarList = document.getElementById("navbar__list");
   navBarList.appendChild(anchor).appendChild(li);
 }
 
@@ -88,24 +62,19 @@ for (const section of sections){
 // Add class 'active' to section when near top of viewport
 
 window.addEventListener('scroll', () =>{
-    isScrolledIntoView(...sections, sections);
-   //  if (isScrolledIntoView(section1)){
-   //    section1.classList.add("your-active-class");
-   //    section2.classList.remove("your-active-class");
-   //    section3.classList.remove("your-active-class");
-   //  }
-   //  else if (isScrolledIntoView(section2))
-   //  {
-   //    section2.classList.add("your-active-class");
-   //    section1.classList.remove("your-active-class");
-   //    section3.classList.remove("your-active-class");
-   //  }
-   //  else if (isScrolledIntoView(section3))
-   //  {
-   //    section3.classList.add("your-active-class");
-   //    section1.classList.remove("your-active-class");
-   //    section2.classList.remove("your-active-class");
-   // }
+  sections.forEach(section => {
+    if (isScrolledIntoView(section)) {
+      section.classList.add("your-active-class");
+      $("."+`${section.id}`+"_link")[0].classList.add("active");
+      // document.getElementByClassName(`${section.id}`).classList.add("activee");
+    } else {
+      section.classList.remove("your-active-class");
+      $("."+`${section.id}`+"_link")[0].classList.remove("active");
+      // document
+      //   .getElementByClassName(`${section.id}`)
+      //   .classList.remove("activee");
+    }
+  });
 });
 
 // Scroll to anchor ID using scrollTO event
