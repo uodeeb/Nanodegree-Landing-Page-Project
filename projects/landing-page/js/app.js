@@ -66,15 +66,14 @@ window.addEventListener('scroll', () =>{
     if (isScrolledIntoView(section)) {
       section.classList.add("your-active-class");
       $("."+`${section.id}`+"_link")[0].classList.add("active");
-      // document.getElementByClassName(`${section.id}`).classList.add("activee");
     } else {
       section.classList.remove("your-active-class");
       $("."+`${section.id}`+"_link")[0].classList.remove("active");
-      // document
-      //   .getElementByClassName(`${section.id}`)
-      //   .classList.remove("activee");
     }
   });
+
+  $("navbar__menu").slideDown();
+  setTimeout(function(){ $("navbar__menu").slideUp(); }, 250);
 });
 
 // Scroll to anchor ID using scrollTO event
